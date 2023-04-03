@@ -14,7 +14,7 @@ func main() {
 	e := echo.New()
 	s := app.New(e)
 
-	if err := s.Start(":8080", defaultDBConfig); err != nil {
+	if err := s.Start("0.0.0.0:8080", defaultDBConfig); err != nil {
 		s.Echo.Logger.Error("server errors: %s", err)
 	}
 }
