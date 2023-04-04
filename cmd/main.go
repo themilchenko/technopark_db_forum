@@ -10,7 +10,7 @@ func main() {
         e := echo.New()
         s := app.New(e)
 
-        dbConfig := "host=db port=5432 dbname=forum user=forum password=forum sslmode=disable"
+        dbConfig := "host=84.201.157.36 port=5432 dbname=forum user=forum password=forum sslmode=disable"
 
         if err := s.Start("0.0.0.0:8080", dbConfig); err != nil {
                 s.Echo.Logger.Error("server errors: %s", err)
