@@ -1,19 +1,14 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.17-alpine
-
-RUN apk update && apk add git
-
+FROM golang:latest
 WORKDIR /app
+COPY / .
 
-COPY go.mod .
-COPY go.sum .
+RUN apt-get -y update && apt-get install -y tzdata
+ENV TZ=Russia/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN go mod download
-
-COPY . .
-
-RUN go mod download github.com/golang-jwt/jwt
+RUN go mod tidy
 RUN go build -o main cmd/main.go
 
 CMD ["./main"]
