@@ -64,13 +64,14 @@ func (h ForumHandler) GetForumUsers(c echo.Context) error {
 	if err != nil {
 		limit = 100
 	}
-	// if limit == 10 {
-	// 	fmt.Sprint(limit)
-	// }
+
 	since := c.QueryParam("since")
-	desc, err := strconv.ParseBool(c.QueryParam("desc"))
-	if err != nil {
-		desc = false
+	desc := false
+	if c.QueryParam("desc") != "" {
+		desc, err = strconv.ParseBool(c.QueryParam("desc"))
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, err)
+		}
 	}
 
 	users, err := h.ForumUsecase.GetForumUsersBySlug(slug, models.ThreadOptions{
@@ -78,9 +79,7 @@ func (h ForumHandler) GetForumUsers(c echo.Context) error {
 		Since: since,
 		Desc:  desc,
 	})
-	// if len(users) == 0 {
-	// 	return echo.NewHTTPError(http.StatusNotFound, fmt.Sprintf("Can't find forum by slug: %s", slug))
-	// }
+
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return c.JSON(http.StatusNotFound, err)

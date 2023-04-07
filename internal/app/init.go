@@ -1,25 +1,25 @@
 package app
 
 import (
+	"github.com/labstack/echo/v4"
+
+	"technopark_db_forum/internal/forum/delivery"
 	forumRepository "technopark_db_forum/internal/forum/repository"
 	"technopark_db_forum/internal/forum/usecase"
 	forumUsecase "technopark_db_forum/internal/forum/usecase"
+	postsHandler "technopark_db_forum/internal/posts/delivery"
 	postRepository "technopark_db_forum/internal/posts/repository"
 	postsUsecase "technopark_db_forum/internal/posts/usecase"
 	serviceHandler "technopark_db_forum/internal/service/delivery"
 	serviceRepository "technopark_db_forum/internal/service/repository"
 	serviceUsecase "technopark_db_forum/internal/service/usecase"
+	threadHandler "technopark_db_forum/internal/thread/delivery"
 	threadRepository "technopark_db_forum/internal/thread/repository"
 	threadUsecase "technopark_db_forum/internal/thread/usecase"
+	usersHandler "technopark_db_forum/internal/users/delivery"
 	userRepository "technopark_db_forum/internal/users/repository"
 	userUsecase "technopark_db_forum/internal/users/usecase"
 	"technopark_db_forum/pkg/logger"
-
-	"github.com/labstack/echo/v4"
-	"technopark_db_forum/internal/forum/delivery"
-	postsHandler "technopark_db_forum/internal/posts/delivery"
-	threadHandler "technopark_db_forum/internal/thread/delivery"
-	usersHandler "technopark_db_forum/internal/users/delivery"
 )
 
 type Server struct {
@@ -48,10 +48,6 @@ func (s *Server) init(URL string) {
 func (s *Server) Start(host, URL string) error {
 	s.init(URL)
 	return s.Echo.Start("localhost" + host)
-}
-
-func makeAddress(host, port string) string {
-	return host + ":" + port
 }
 
 func (s *Server) makeUseCase(URL string) {
