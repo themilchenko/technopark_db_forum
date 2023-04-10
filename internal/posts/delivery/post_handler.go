@@ -67,7 +67,7 @@ func (h PostHandler) GetPost(c echo.Context) error {
 		if err.Error() == e.ErrNotFound.Error() {
 			return c.JSON(http.StatusNotFound, err)
 		}
-		return c.JSON(http.StatusInternalServerError, err)
+		return echo.NewHTTPError(http.StatusNotFound, fmt.Sprintf("Can't find post with id: %d", id))
 	}
 
 	return c.JSON(http.StatusOK, post)

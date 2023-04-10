@@ -139,6 +139,9 @@ func (u usecase) GetPostByID(id uint64) (models.Post, error) {
 }
 
 func (u usecase) UpdatePost(post models.Post) (models.Post, error) {
+	if post.Message == "" {
+		return u.postRepository.GetPostByID(post.ID)
+	}
 	res, err := u.postRepository.UpdatePost(post)
 	if err != nil {
 		return models.Post{}, err

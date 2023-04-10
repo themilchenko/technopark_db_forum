@@ -3,6 +3,7 @@ package forumRepository
 import (
 	"technopark_db_forum/internal/models"
 	"technopark_db_forum/pkg/errors"
+	"fmt"
 
 	"github.com/lib/pq"
 	_ "github.com/lib/pq"
@@ -82,6 +83,7 @@ func (p *Postgres) GetUsers(slug string) ([]models.User, error) {
 
 func (p *Postgres) GetForumUsers(slug string, options models.ThreadOptions) ([]models.User, error) {
 	query := `SELECT users.nickname, users.fullname, users.email, users.about FROM users JOIN forum_users ON forum_users.user_nick = users.nickname WHERE forum_users.forum = $1`
+	fmt.Println("Since: " + options.Since)
 	if options.Since != "" && options.Desc {
 		query += ` AND users.nickname < $2`
 	} else if options.Since != "" && !options.Desc {
@@ -98,6 +100,8 @@ func (p *Postgres) GetForumUsers(slug string, options models.ThreadOptions) ([]m
 			query += ` LIMIT $2`
 		}
 	}
+
+	fmt.Println(query)
 
 	users := make([]models.User, 0)
 	var err error

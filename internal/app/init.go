@@ -47,7 +47,7 @@ func (s *Server) init(URL string) {
 
 func (s *Server) Start(host, URL string) error {
 	s.init(URL)
-	return s.Echo.Start("localhost" + host)
+	return s.Echo.Start(host)
 }
 
 func (s *Server) makeUseCase(URL string) {

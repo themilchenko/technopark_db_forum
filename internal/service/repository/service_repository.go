@@ -28,7 +28,7 @@ func NewPostgres(url string) (*Postgres, error) {
 	return &Postgres{DB: db}, nil
 }
 
-func (p Postgres) GetStatus() (models.ServiceStatus, error) {
+ func (p Postgres) GetStatus() (models.ServiceStatus, error) {
 	var res models.ServiceStatus
 	
 	query := `SELECT COUNT(*) FROM users`
@@ -59,6 +59,11 @@ func (p Postgres) GetStatus() (models.ServiceStatus, error) {
 }
 
 func (p Postgres) Clear() error {
-	_, err := p.DB.Exec(`DELETE FROM forums; DELETE FROM threads; DELETE FROM posts; DELETE FROM votes; DELETE FROM forum_users; DELETE FROM users;`)
+	_, err := p.DB.Exec(`TRUNCATE forums CASCADE;
+						 TRUNCATE threads CASCADE;
+						 TRUNCATE posts CASCADE;
+						 TRUNCATE votes CASCADE;
+						 TRUNCATE forum_users CASCADE;
+						 TRUNCATE users CASCADE;`)
 	return err
 }

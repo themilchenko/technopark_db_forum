@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS citext;
 
 CREATE TABLE IF NOT EXISTS users (
-    nickname citext PRIMARY KEY,
+    nickname citext COLLATE "ucs_basic" PRIMARY KEY,
     fullname VARCHAR NOT NULL,
     email citext NOT NULL UNIQUE,
     about VARCHAR NOT NULL

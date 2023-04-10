@@ -65,7 +65,11 @@ func (h ForumHandler) GetForumUsers(c echo.Context) error {
 		limit = 100
 	}
 
-	since := c.QueryParam("since")
+	since := ""
+	if (c.QueryParam("since") != "") {
+		since = c.QueryParam("since")
+	}
+	fmt.Println("Since: " + since)
 	desc := false
 	if c.QueryParam("desc") != "" {
 		desc, err = strconv.ParseBool(c.QueryParam("desc"))

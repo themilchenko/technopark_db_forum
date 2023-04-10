@@ -70,8 +70,14 @@ func (p Postgres) GetPostByID(id uint64) (models.Post, error) {
 
 func (p Postgres) UpdatePost(post models.Post) (models.Post, error) {
 	var res models.Post
+	qyery1 := `SELECT id, author, created, forum, message, parent, thread FROM posts WHERE id = $1 AND message = $2`
+	err := p.DB.Get(&res, qyery1, post.ID, post.Message)
+	if err == nil {
+		return res, nil
+	}
+
 	query := `UPDATE posts SET message = $1, is_edited=TRUE WHERE id = $2 RETURNING id, author, created, forum, is_edited, message, parent, thread`
-	err := p.DB.QueryRow(query, post.Message, post.ID).Scan(&res.ID, &res.Author, &res.Created, &res.Forum, &res.IsEdited, &res.Message, &res.Parent, &res.ThreadID)
+	err = p.DB.QueryRow(query, post.Message, post.ID).Scan(&res.ID, &res.Author, &res.Created, &res.Forum, &res.IsEdited, &res.Message, &res.Parent, &res.ThreadID)
 	return res, err
 }
 
