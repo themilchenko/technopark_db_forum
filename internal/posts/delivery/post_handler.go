@@ -112,7 +112,7 @@ func (h PostHandler) GetThreadPosts(c echo.Context) error {
 	}
 
 	sortBy := c.QueryParam("sort")
-	if sortBy != "flat" && sortBy != "tree" && sortBy != "parent_tree" {
+	if err != nil {
 		sortBy = "flat"
 	}
 

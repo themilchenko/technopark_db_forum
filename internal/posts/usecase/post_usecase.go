@@ -9,6 +9,7 @@ import (
 	"technopark_db_forum/internal/thread/repository"
 	"technopark_db_forum/internal/users/repository"
 	e "technopark_db_forum/pkg/errors"
+	"time"
 )
 
 type PostUsecase interface {
@@ -51,10 +52,8 @@ func (u usecase) CreatePosts(posts []models.Post, slugOrID string) ([]models.Pos
 	}
 
 
+	curTime := time.Now().Format(time.RFC3339)
 	for index := range posts {
-		posts[index].ThreadID = thread.ID
-		posts[index].Forum = thread.Forum
-
 		_, err := u.userRepository.GetUserByNickname(posts[index].Author)
 		if err != nil {
 			return nil, e.ErrNoAuthorPost
@@ -75,6 +74,9 @@ func (u usecase) CreatePosts(posts []models.Post, slugOrID string) ([]models.Pos
 			}
 		}
 
+		posts[index].ThreadID = thread.ID
+		posts[index].Forum = thread.Forum
+		posts[index].Created = curTime
 	}
 
 	res, err := u.postRepository.CreatePosts(posts)

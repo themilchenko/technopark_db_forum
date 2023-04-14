@@ -18,4 +18,5 @@ var (
 	ErrNoAuthorPost     = errors.New("no author post")
 	ErrNoRowsID         = errors.New("no rows in result set")
 	ErrNoRowsSlug       = errors.New("no rows in result set")
+	ErrNoRows = errors.New("no rows in result set")
 )

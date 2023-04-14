@@ -1,19 +1,20 @@
 package main
 
 import (
+	"os"
+
 	"github.com/labstack/echo-contrib/prometheus"
 	"github.com/labstack/echo/v4"
-	"os"
 
 	"technopark_db_forum/internal/app"
 )
 
 const (
-	dbConfig = "host=postgresql port=5432 user=forum dbname=forum password=forum sslmode=disable"
+	dbConfig = "host=localhost port=5432 user=postgres dbname=postgres sslmode=disable"
 )
 
 func main() {
- e := echo.New()
+	e := echo.New()
 
 	// Create new echo instance for metrics
 	metricsWork := echo.New()
