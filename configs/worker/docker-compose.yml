@@ -1,0 +1,31 @@
+version: '3. 3'
+services:
+  app1:
+    hostname: b1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8080
+      METRICS_PORT: 9090
+      DB_HOST: 158.160.38.0
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+
+  node-exporter:
+    hostname: node-exporter
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - "9100:9100"

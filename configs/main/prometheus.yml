@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'backend-1'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '158.160.58.114:9090' ]
+  - job_name: 'cpu-1'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '158.160.58.114:9100' ]
+
+  - job_name: 'backend-2'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '158.160.48.52:9090' ]
+  - job_name: 'cpu-2'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '158.160.48.52:9100' ]
+
+  - job_name: 'backend-3'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '84.201.156.126:9090' ]
+  - job_name: 'cpu-3'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ '84.201.156.126:9100' ]
